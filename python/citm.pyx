@@ -49,8 +49,8 @@ cdef class ITM:
     cdef double time
     cdef double location
     cdef double situation 
-    cdef double[:] A__db
-    cdef long long[:] warnings
+    cdef double[1] A__db
+    cdef long[1] warnings
 
     @property
     def A__db(self):
@@ -58,7 +58,7 @@ cdef class ITM:
 
     @property
     def warnings(self):
-        return hex(np.asarray(self.warnings)[0])
+        return self.warnings
 
     @property
     def theta_hzn(self):
@@ -116,7 +116,7 @@ cdef class ITM:
         self.mdvar = mdvar
         cdef np.ndarray[np.double_t, ndim=1] a__db = np.ndarray((1,))
         self.A__db = a__db
-        cdef np.ndarray[np.long_t, ndim=1] warnings = np.ndarray((1,), dtype=np.int64)
+        cdef np.ndarray[np.long_t, ndim=1] warnings = np.ndarray((1,), dtype=np.int32)
         self.warnings = warnings
 
     # cdef int itm_p2p_tls_invoke(double h_tx__meter, double h_rx__meter, np.ndarray[np.double_t, ndim=1] pfl, int climate, double N_0, double f__mhz,
@@ -139,7 +139,7 @@ cdef class ITM:
         double time, double location, double situation, 
     ):
         cdef np.ndarray[np.double_t, ndim=1] A__db = np.ndarray((1,), dtype=np.double)
-        cdef np.ndarray[np.long_t, ndim=1] warnings = np.ndarray((1,), dtype=np.int64)
+        cdef np.ndarray[np.long_t, ndim=1] warnings = np.ndarray((1,), dtype=np.int32)
         
         return_val =  ITM_P2P_TLS_Ex(
             h_tx__meter=self.h_tx__meter, h_rx__meter=self.h_rx__meter,
@@ -172,7 +172,7 @@ cdef class ITM:
         double confidence, double reliability
     ):
         cdef np.ndarray[np.double_t, ndim=1] A__db = np.ndarray((1,), dtype=np.double)
-        cdef np.ndarray[np.long_t, ndim=1] warnings = np.ndarray((1,), dtype=np.int64)
+        cdef np.ndarray[np.long_t, ndim=1] warnings = np.ndarray((1,), dtype=np.int32)
 
         return_val = ITM_P2P_CR_Ex(
             h_tx__meter=self.h_tx__meter, h_rx__meter=self.h_rx__meter,
